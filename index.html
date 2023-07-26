@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SweetHeart</title>
+  <style>
+    body {
+      text-align: center;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #f4d7dc; /* Love-themed background color */
+      overflow: hidden; /* Hide the overflow of the heart symbols */
+    }
+
+    .passwordContainer {
+      display: block;
+    }
+
+    .imageContainer {
+      display: none;
+      position: relative;
+    }
+
+    #myImage {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .heartAnimation {
+      position: absolute;
+      font-size: 40px; /* Set the size of the heart symbols */
+      opacity: 1;
+      animation: floatUp 3s ease-out infinite;
+      color: red; /* Set the heart symbol color to red */
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="passwordContainer" id="passwordContainer">
+      <h2>Welcome My Sweet ❤</h2>
+      <label for="password">Enter password:</label>
+      <input type="password" id="password">
+      <button onclick="checkPasswords()">Submit</button>
+    </div>
+    <div class="imageContainer" id="image1Container">
+      <!-- Heart symbols for animation -->
+      <div class="heartAnimation" style="animation-delay: 0s;">❤</div>
+      <div class="heartAnimation" style="animation-delay: 0.1s;">❤</div>
+      <div class="heartAnimation" style="animation-delay: 0.2s;">❤</div>
+      <!-- Add more rows of heart symbols -->
+      <!-- Your actual image -->
+      <h2>Bujjamma This is for you</h2>
+      <img id="myImage" src="" alt="Image Description">
+    </div>
+    <div class="descriptionContainer" id="descriptionContainer" style="display: none;">
+        <!-- Description after displaying all images -->
+        <h2>Thank you for visiting!</h2>
+        <p>This is a brief description of the images you've seen.</p>
+      </div>
+    <div class="imageContainer" id="image2Container">
+      <!-- Heart symbols for animation -->
+      <div class="heartAnimation" style="animation-delay: 0s;">❤</div>
+      <div class="heartAnimation" style="animation-delay: 0.1s;">❤</div>
+      <div class="heartAnimation" style="animation-delay: 0.2s;">❤</div>
+      <!-- Add more rows of heart symbols -->
+      <!-- Your actual image -->
+      <h1>Heyyyyy!!</h1>
+      <p></p>
+    </div>
+  </div>
+
+  <script>
+    const imagePaths = [
+      "myimage.jpeg",
+      "run.png",
+      // Add more image paths as needed
+    ];
+    // Set your desired passwords here
+    const password1 = "shadow";
+    const correctPassword2 = "YourDesiredPassword2";
+
+    function checkPasswords() {
+      const enteredPassword = document.getElementById("password").value;
+
+      if (enteredPassword === password1) {
+        // Password 1 matches, show image 1 container and hide password container
+        document.getElementById("image1Container").style.display = "block";
+        document.getElementById("passwordContainer").style.display = "none";
+        displayImages(imagePaths);
+      } else if (enteredPassword === correctPassword2) {
+        // Password 2 matches, show image 2 container and hide password container
+        document.getElementById("image2Container").style.display = "block";
+        document.getElementById("passwordContainer").style.display = "none";
+      } else {
+        // Password does not match, deny access
+        alert("Soch kar jawab dena meri pyaar");
+      }
+    }
+
+    // Heart animation for both images
+    const image1Container = document.getElementById("image1Container");
+    const image2Container = document.getElementById("image2Container");
+
+    function generateHeartGrid(container) {
+      const imageWidth = container.offsetWidth;
+      const imageHeight = container.offsetHeight;
+      const rows = Math.ceil(imageHeight / 40); // Adjust the heart size (40px) based on the font-size in CSS
+      const columns = Math.ceil(imageWidth / 40);
+
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < columns; col++) {
+          const heart = document.createElement("div");
+          heart.className = "heartAnimation";
+          heart.innerText = "❤";
+          heart.style.left = col * 40 + "px";
+          heart.style.top = row * 40 + "px";
+          container.appendChild(heart);
+        }
+      }
+    }
+
+    // Generate heart grid for both images
+    generateHeartGrid(image1Container);
+    generateHeartGrid(image2Container);
+    // Function to display images one by one
+    function displayImages(images) {
+      let currentIndex = 0;
+
+      function showNextImage() {
+        if (currentIndex < images.length) {
+          const imgElement = document.getElementById("myImage");
+          imgElement.src = images[currentIndex];
+          currentIndex++;
+          setTimeout(showNextImage, 3000); // Display each image for 3 seconds
+        } else {
+          // If the last image is displayed, show the description
+          document.getElementById("imageContainer").style.display = "none";
+          document.getElementById("descriptionContainer").style.display = "block";
+        }
+      }
+
+      // Start displaying images
+      showNextImage();
+    }
+
+  </script>
+</body>
+</html>
